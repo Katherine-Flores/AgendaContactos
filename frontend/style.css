@@ -1,0 +1,7 @@
+#card, #form-wrapper, #panel {
+  transition: all 0.7s ease-in-out;
+}
+
+input:invalid {
+  border-color: #f87171; /* rojo suave si no cumple */
+}

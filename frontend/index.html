@@ -1,0 +1,78 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Agenda de Contactos - Login y Registro</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <h2>Registro</h2>
+  <form id="registerForm">
+    <input type="text" name="nombre_usuario" placeholder="Usuario" required>
+    <input type="password" name="contrasena" placeholder="Contraseña" required>
+    <button type="submit">Registrarse</button>
+  </form>
+
+  <h2>Login</h2>
+  <form id="loginForm">
+    <input type="text" name="nombre_usuario" placeholder="Usuario" required>
+    <input type="password" name="contrasena" placeholder="Contraseña" required>
+    <button type="submit">Iniciar Sesión</button>
+  </form>
+
+  <div id="resultado"></div>
+
+<script>
+  const registerForm = document.getElementById('registerForm');
+  const loginForm = document.getElementById('loginForm');
+
+  registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(registerForm);
+    const res = await fetch('http://localhost:3000/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre_usuario: data.get('nombre_usuario'),
+        contrasena: data.get('contrasena')
+      })
+    });
+    const json = await res.json();
+
+    if (res.ok) {
+      Swal.fire('¡Registro exitoso!', json.message, 'success');
+      registerForm.reset();
+    } else {
+      Swal.fire('Error', json.error || 'No se pudo registrar', 'error');
+    }
+  });
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(loginForm);
+    const res = await fetch('http://localhost:3000/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        nombre_usuario: data.get('nombre_usuario'),
+        contrasena: data.get('contrasena')
+      })
+    });
+    const json = await res.json();
+
+    if (res.ok) {
+      Swal.fire({
+        title: '¡Login exitoso!',
+        text: json.message,
+        icon: 'success',
+        confirmButtonText: 'Ir al Dashboard'
+      }).then(() => {
+        window.location.href = 'dashboard.html'; // Cambia esto si tu dashboard tiene otro nombre
+      });
+    } else {
+      Swal.fire('Error', json.error || 'No se pudo iniciar sesión', 'error');
+    }
+  });
+</script>
+</body>
+</html>
