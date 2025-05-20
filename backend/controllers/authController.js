@@ -14,6 +14,9 @@ exports.register = (req, res) => {
   });
 };
 
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = 'mi_clave_secreta_super_segura';
+
 exports.login = (req, res) => {
   const { nombre_usuario, contrasena } = req.body;
 
@@ -25,6 +28,15 @@ exports.login = (req, res) => {
     const valido = bcrypt.compareSync(contrasena, user.contrasena_hash);
     if (!valido) return res.status(401).json({ error: 'Contraseña incorrecta' });
 
-    res.json({ message: 'Login exitoso', usuario_id: user.id });
+    const token = jwt.sign(
+      { id: user.id, nombre_usuario: user.nombre_usuario },
+      'KatherineFlores_0909_22_1883',
+      { expiresIn: '2h' }
+    );
+
+    res.json({
+      message: 'Login exitoso', 
+      usuario_id: user.id,
+      token});
   });
 };

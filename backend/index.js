@@ -15,6 +15,9 @@ app.get('/', (req, res) => {
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
+const dashboardRoutes = require('./routes/dashboard');
+app.use('/api/dashboard', dashboardRoutes);
+
 // Puerto
 const PORT = 3000;
 app.listen(PORT, () => {
