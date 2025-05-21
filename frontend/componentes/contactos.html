@@ -1,12 +1,21 @@
 <h2>Lista de Contactos</h2>
-<table id="tablaContactos">
-  <thead>
+
+<div class="mb-3 text-end">
+  <button id="btnAgregar" class="btn btn-primary">Añadir contacto</button>
+</div>
+
+<table id="tablaContactos" class="table table-bordered table-striped table-hover">
+  <thead class="table-dark">
     <tr>
       <th>Nombre</th>
       <th>Teléfono</th>
       <th>Correo</th>
+      <th>Categorías</th>
+      <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
+    <tr><td colspan="5" class="text-center">Cargando contactos...</td></tr>
   </tbody>
 </table>
+

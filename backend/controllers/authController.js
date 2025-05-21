@@ -5,6 +5,12 @@ const db = new sqlite3.Database('./database.sqlite');
 exports.register = (req, res) => {
   const { nombre_usuario, contrasena } = req.body;
 
+  // Validar con regex
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+  if (!regex.test(contrasena)) {
+    return res.status(400).json({ error: 'La contraseña debe contener al menos una mayúscula, una minúscula, un número y un símbolo.' });
+  }
+
   const hash = bcrypt.hashSync(contrasena, 10);
   const sql = `INSERT INTO usuarios (nombre_usuario, contrasena_hash) VALUES (?, ?)`;
 
@@ -15,7 +21,7 @@ exports.register = (req, res) => {
 };
 
 const jwt = require('jsonwebtoken');
-const SECRET_KEY = 'mi_clave_secreta_super_segura';
+const SECRET_KEY = 'KatherineFlores_0909_22_1883';
 
 exports.login = (req, res) => {
   const { nombre_usuario, contrasena } = req.body;

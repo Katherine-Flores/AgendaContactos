@@ -1,4 +1,6 @@
 const token = localStorage.getItem('token');
+const id = localStorage.getItem('id');
+console.log(id);
 
 if (!token) {
   alert('Acceso denegado. Debes iniciar sesión.');
@@ -21,12 +23,22 @@ async function cargarContactos() {
     const tbody = document.querySelector('#tablaContactos tbody');
     tbody.innerHTML = '';
 
+    if (contactos.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">Sin contactos registrados</td></tr>`;
+      return;
+    }
+
     contactos.forEach(c => {
       const fila = `
         <tr>
-          <td>${c.primer_nombre} ${c.primer_apellido}</td>
-          <td>${c.telefono}</td>
-          <td>${c.correo_electronico}</td>
+          <td>${c.nombre_completo || '-'}</td>
+          <td>${c.telefono || '-'}</td>
+          <td>${c.correo_electronico || '-'}</td>
+          <td>${c.categorias || '-'}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-1" onclick="editarContacto(${c.id})">Editar</button>
+            <button class="btn btn-sm btn-danger" onclick="eliminarContacto(${c.id})">Eliminar</button>
+          </td>
         </tr>
       `;
       tbody.innerHTML += fila;
@@ -36,9 +48,18 @@ async function cargarContactos() {
   }
 }
 
-// Ejecutar solo si el componente actual es contactos
 window.addEventListener('DOMContentLoaded', () => {
   if (location.hash === '#contactos' || location.hash === '') {
     cargarContactos();
   }
+});
+
+function editarContacto(id) {
+  // Abre modal o navega a formulario de edición
+  alert('Editar contacto con ID: ' + id);
+}
+
+document.getElementById('btnAgregar').addEventListener('click', () => {
+  // Abre modal o navega a formulario de nuevo contacto
+  alert('Agregar nuevo contacto');
 });
