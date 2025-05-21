@@ -1,25 +1,33 @@
 <div class="tabs-container">
-  <button class="tab-btn active" data-tab="usuario">Datos de Usuario</button>
-  <button class="tab-btn" data-tab="categorias">Categorías</button>
-  <button id="btnActualizar" class="btn-azul ms-auto">Actualizar Datos</button>
+  <button class="tab-btn active" data-tab="categorias">Categorías</button>
+  <button class="tab-btn" data-tab="usuario">Datos de Usuario</button>
 </div>
 
-<div class="contenido-tab" id="formUsuario">
-  <form id="formDatosUsuario" class="form-box">
-    <label>Usuario</label>
-    <input type="text" id="usuario" placeholder="Usuario Actual">
-    
-    <label>Contraseña</label>
-    <input type="password" id="contrasena" placeholder="Contraseña Actual">
-  </form>
-</div>
+<div class="tabs-content">
+  <div class="contenido-tab" id="tablaCategorias">
+    <table id="tabla" class="tabla-categorias table">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+    <button id="btnNuevaCategoria" class="mt-2">Añadir Categoría</button>
+  </div>
 
-<div class="contenido-tab d-none" id="tablaCategorias">
-  <table id="tabla" class="tabla-categorias">
-    <thead>
-      <tr><th>Nombre</th><th>Acciones</th></tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <button id="btnNuevaCategoria" class="btn-verde mt-2">Añadir Categoría</button>
+  <div class="contenido-tab" id="formUsuario">
+    <form id="formDatosUsuario" class="form-box">
+      <label>Usuario</label>
+      <input type="text" id="usuario" placeholder="Usuario Actual">
+
+      <label>Contraseña</label>
+      <input type="password" id="contrasena" placeholder="Contraseña Actual">
+
+      <button type="submit" id="btnActualizarUsuario">Actualizar Datos</button>
+    </form>
+  </div>
 </div>

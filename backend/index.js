@@ -4,7 +4,9 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: 'http://127.0.0.1:5500'
+}));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
@@ -17,6 +19,9 @@ app.use('/api/auth', authRoutes);
 
 const dashboardRoutes = require('./routes/dashboard');
 app.use('/api/dashboard', dashboardRoutes);
+
+const categoriasRoutes = require('./routes/categorias');
+app.use('/api/categorias', categoriasRoutes);
 
 // Puerto
 const PORT = 3000;
