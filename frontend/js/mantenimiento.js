@@ -36,8 +36,8 @@ async function cargarCategorias() {
     tr.innerHTML = `
       <td>${cat.nombre}</td>
       <td>
-        <i class="fa-solid fa-pen-to-square editar" style="cursor:pointer;"></i>
-        <i class="fa-solid fa-trash eliminar" style="cursor:pointer;"></i>
+        <i class="fa-solid fa-pen-to-square editar btn btn-warning" style="cursor:pointer;"></i>
+        <i class="fa-solid fa-trash eliminar btn btn-danger" style="cursor:pointer;"></i>
       </td>
     `;
 
