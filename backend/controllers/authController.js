@@ -21,7 +21,6 @@ exports.register = (req, res) => {
 };
 
 const jwt = require('jsonwebtoken');
-const SECRET_KEY = 'KatherineFlores_0909_22_1883';
 
 exports.login = (req, res) => {
   const { nombre_usuario, contrasena } = req.body;

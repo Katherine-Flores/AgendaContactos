@@ -164,7 +164,8 @@
 
     if (res.ok) {
       localStorage.setItem('token', json.token);
-      localStorage.setItem('id', json.usuario_id);
+      console.log('TOKEN GUARDADO:', localStorage.getItem('token'));
+
       Swal.fire({
         title: '¡Login exitoso!',
         text: json.message,

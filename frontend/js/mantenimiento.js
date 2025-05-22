@@ -132,4 +132,66 @@ document.getElementById('btnNuevaCategoria').addEventListener('click', () => {
   });
 });
 
-setTimeout(() => cargarCategorias(), 300); // 300ms de espera
+// ------------------------------------------------------------------------------------------//
+
+async function cargarUsuarioActual() {
+  const token = localStorage.getItem('token');
+
+  const res = await fetch('http://localhost:3000/api/usuario-actual', {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  if (!res.ok) {
+    Swal.fire('Error', 'No se pudo cargar el usuario actual', 'error');
+    return;
+  }
+
+  const usuario = await res.json();
+  document.getElementById('usuario').value = usuario.nombre_usuario;
+  document.getElementById('contrasena').value = '';
+}
+
+function validarContrasenaFuerte(pass) {
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+  return regex.test(pass);
+}
+
+document.getElementById('formDatosUsuario').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const usuario = document.getElementById('usuario').value.trim();
+  const contrasena = document.getElementById('contrasena').value.trim();
+
+  if (!usuario) {
+    Swal.fire('Error', 'El nombre de usuario no puede estar vacío', 'error');
+    return;
+  }
+
+  if (contrasena && !validarContrasenaFuerte(contrasena)) {
+    Swal.fire('Error', 'La contraseña debe tener mayúsculas, minúsculas, número y símbolo', 'error');
+    return;
+  }
+
+  const token = localStorage.getItem('token');
+  const res = await fetch('http://localhost:3000/api/usuario-actual', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ usuario, contrasena })
+  });
+
+  const json = await res.json();
+
+  if (res.ok) {
+    Swal.fire('Actualizado', json.message, 'success');
+    cargarUsuarioActual();
+  } else {
+    Swal.fire('Error', json.message || 'No se pudo actualizar', 'error');
+  }
+});
+
+cargarUsuarioActual();
+cargarCategorias();

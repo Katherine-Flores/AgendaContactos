@@ -1,65 +1,56 @@
-const token = localStorage.getItem('token');
-const id = localStorage.getItem('id');
-console.log(id);
-
-if (!token) {
-  alert('Acceso denegado. Debes iniciar sesión.');
-  window.location.href = 'index.html';
-}
-
 async function cargarContactos() {
+  const token = localStorage.getItem('token');
+  if (!token) return;
+
   try {
     const res = await fetch('http://localhost:3000/api/dashboard/contactos', {
-      method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': token
+        Authorization: 'Bearer ' + token
       }
     });
 
-    if (!res.ok) throw new Error('Error al cargar contactos');
+    const json = await res.json();
 
-    const contactos = await res.json();
-    const tbody = document.querySelector('#tablaContactos tbody');
-    tbody.innerHTML = '';
-
-    if (contactos.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted">Sin contactos registrados</td></tr>`;
+    if (!res.ok) {
+      console.error(json);
+      Swal.fire('Error', 'No se pudieron cargar los contactos', 'error');
       return;
     }
 
-    contactos.forEach(c => {
-      const fila = `
-        <tr>
-          <td>${c.nombre_completo || '-'}</td>
-          <td>${c.telefono || '-'}</td>
-          <td>${c.correo_electronico || '-'}</td>
-          <td>${c.categorias || '-'}</td>
-          <td>
-            <button class="btn btn-sm btn-warning me-1" onclick="editarContacto(${c.id})">Editar</button>
-            <button class="btn btn-sm btn-danger" onclick="eliminarContacto(${c.id})">Eliminar</button>
-          </td>
-        </tr>
+    console.log(json); // 👀 Aquí ya está bien
+    const contactos = json;
+
+    const tbody = document.querySelector('#tablaContactos tbody');
+    tbody.innerHTML = '';
+
+    contactos.forEach(contacto => {
+      const nombreCompleto = [contacto.primer_nombre, contacto.segundo_nombre, contacto.primer_apellido, contacto.segundo_apellido]
+        .filter(n => n)
+        .join(' ') || '-';
+
+      const telefono = contacto.telefono || '-';
+      const correo = contacto.correo_electronico || '-';
+      const categorias = contacto.categorias.length > 0
+        ? contacto.categorias.map(cat => `<span class="badge bg-info text-dark me-1">${cat}</span>`).join('')
+        : '-';
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${nombreCompleto}</td>
+        <td>${telefono}</td>
+        <td>${correo}</td>
+        <td>${categorias}</td>
+        <td>
+          <button class="btn btn-sm btn-warning">Editar</button>
+          <button class="btn btn-sm btn-danger">Eliminar</button>
+        </td>
       `;
-      tbody.innerHTML += fila;
+      tbody.appendChild(tr);
     });
-  } catch (error) {
-    alert(error.message);
+  } catch (err) {
+    console.error('Error de red o JSON:', err);
+    Swal.fire('Error', 'Ocurrió un error al cargar los contactos', 'error');
   }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  if (location.hash === '#contactos' || location.hash === '') {
-    cargarContactos();
-  }
-});
-
-function editarContacto(id) {
-  // Abre modal o navega a formulario de edición
-  alert('Editar contacto con ID: ' + id);
-}
-
-document.getElementById('btnAgregar').addEventListener('click', () => {
-  // Abre modal o navega a formulario de nuevo contacto
-  alert('Agregar nuevo contacto');
-});
+cargarContactos();

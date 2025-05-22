@@ -23,6 +23,9 @@ app.use('/api/dashboard', dashboardRoutes);
 const categoriasRoutes = require('./routes/categorias');
 app.use('/api/categorias', categoriasRoutes);
 
+const usuariosRoutes = require('./routes/usuarioActual');
+app.use('/api', usuariosRoutes);
+
 // Puerto
 const PORT = 3000;
 app.listen(PORT, () => {
