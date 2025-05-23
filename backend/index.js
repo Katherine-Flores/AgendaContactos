@@ -29,6 +29,9 @@ app.use('/api', usuariosRoutes);
 const reunionesRoutes = require('./routes/reuniones');
 app.use('/api', reunionesRoutes);
 
+const reportesRoutes = require('./routes/reportes');
+app.use('/api', reportesRoutes);
+
 // Puerto
 const PORT = 3000;
 app.listen(PORT, () => {
