@@ -12,35 +12,60 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-  <ul class="nav nav-tabs mt-2">
-    <li class="nav-item ms-3">
-      <a class="nav-link active" href="#contactos">Contactos</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#mantenimiento">Mantenimiento</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#cumples">Cumpleaños</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#ayuda">Ayuda</a>
-    </li>
-    <li class="nav-item ms-auto">
-      <button id="btnCerrarSesion" class="btn btn-outline-danger me-3">Cerrar sesión</button>
-    </li>
-  </ul>
+  <div class="d-flex" id="wrapper">
+    <nav id="sidebar" class="text-white d-flex flex-column bg-white">
+      <div class="sidebar-header p-3 titulo">
+        <h4>Agenda KF</h4>
+      </div>
+      <ul class="list-unstyled components p-3 flex-grow-1">
+        <li class="opcion">
+          <a href="#contactos" class="nav-link">
+            <i class="fa-solid fa-address-book me-2"></i>
+            Contactos
+          </a>
+        </li>
+        <li class="mt-4 opcion">
+          <a href="#mantenimiento" class="nav-link">
+            <i class="fa-solid fa-gear me-2"></i>
+            Mantenimiento
+          </a>
+        </li>
+        <li class="mt-4 opcion">
+          <a href="#cumples" class="nav-link">
+            <i class="fa-solid fa-calendar-days me-2"></i>
+            Reuniones
+          </a>
+        </li>
+        <li class="mt-4 opcion">
+          <a href="#ayuda" class="nav-link">
+            <i class="fa-solid fa-circle-info me-2"></i>
+            Ayuda
+          </a>
+        </li>
+      </ul>
+      <div class="p-3">
+        <button id="btnCerrarSesion" class="btn btn-outline-danger w-100">
+          <i class="fa-solid fa-right-from-bracket me-2"></i>
+          Cerrar sesión
+        </button>
+      </div>
+    </nav>
 
-  <main id="contenido" class="p-3">
-    <!-- Aquí se carga cada vista -->
-  </main>
+    <div id="page-content-wrapper" class="flex-grow-1">
+      <nav class="navbar navbar-light bg-white" style="border-bottom: 1px solid rgba(0, 0, 0, 0.3);">
+          <div class="container-fluid">
+            <button class="btn btn-outline-secondary" id="menu-toggle">
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+      </nav>
+      <main id="contenido" class="p-3">
+        <!-- Aquí se carga cada vista -->
+      </main>
+    </div>
+  </div>
 
-  <script src="js/router.js"></script>
-  <script>
-    document.getElementById('btnCerrarSesion').addEventListener('click', () => {
-      localStorage.removeItem('token');  // Elimina el token
-      window.location.href = 'index.html';  // Redirige al login
-    });
-  </script>  
+  <script src="js/router.js"></script> 
 
   <!-- Script loggica navbar -->
   <script>
@@ -55,6 +80,18 @@
       });
     });
   </script>
+
+  <script>
+    document.getElementById("menu-toggle").addEventListener("click", function () {
+      document.getElementById("wrapper").classList.toggle("toggled");
+    });
+
+    document.getElementById('btnCerrarSesion').addEventListener('click', () => {
+      localStorage.removeItem('token');
+      window.location.href = 'index.html';
+    });
+  </script>
+
   <script src="https://kit.fontawesome.com/bafafa38d6.js" crossorigin="anonymous"></script>
 </body>
 </html>
