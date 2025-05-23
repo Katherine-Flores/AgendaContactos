@@ -101,7 +101,7 @@ document.getElementById('btnNuevaCategoria').addEventListener('click', () => {
     title: 'Nueva categoría',
     input: 'text',
     inputLabel: 'Nombre de la categoría',
-    inputPlaceholder: 'Ej. Tecnología',
+    inputPlaceholder: 'Ej. Universidad',
     showCancelButton: true,
     confirmButtonText: 'Agregar',
     cancelButtonText: 'Cancelar',

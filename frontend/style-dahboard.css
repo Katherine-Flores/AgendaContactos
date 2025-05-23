@@ -3,6 +3,7 @@
   --azul-medio: #426CC2;
   --azul-claro: #EAF4FF;
   --fondo-claro: #F8F5EE;
+  --lavanda: #D3B4DD;
 }
 
 * {
@@ -13,7 +14,7 @@
 
 #contenido {
   background-color: var(--fondo-claro);
-  height: calc(100vh - 54px);
+  min-height: calc(100vh - 54px);
 }
 
 .tabs-container {
@@ -48,6 +49,7 @@
   border-radius: 10px;
   overflow: hidden;
   position: relative;
+  max-width: 600px;
   margin-left: 32px;
   margin-top: 20px;
 }
@@ -114,4 +116,62 @@
 .opcion:hover,
 .nav-link.active {
   color: var(--azul-medio);
+}
+
+.tag-default {
+  background-color: #333;
+}
+
+.tag-trabajo {
+  background-color: var(--azul-oscuro);
+}
+
+.tag-amigos {
+  background-color: var(--azul-medio);
+}
+
+.tag-familia {
+  background-color: var(--lavanda);
+  color: var(--azul-oscuro) !important;
+}
+
+#paginacionContactos {
+  display: flex;
+  justify-content: center;
+  gap: 8px; /* espacio entre botones */
+  flex-wrap: wrap;
+  padding: 0;
+  list-style: none;
+}
+
+#paginacionContactos button {
+  min-width: 40px;
+  padding: 6px 12px;
+  text-align: center;
+}
+
+.btn-form {
+  background-color: var(--azul-medio);
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  padding: 10px;
+}
+
+.contenido-info {
+  margin: 12px;
+  padding: 20px;
+  border-radius: 32px;
+  background-color: white;
+}
+
+#filtroCategorias {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 4px;
+  z-index: 100;
+  width: 100px;
+  border-radius: 6px;
 }

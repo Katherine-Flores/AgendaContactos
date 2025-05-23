@@ -1,33 +1,39 @@
-<div class="tabs-container">
-  <button class="tab-btn active" data-tab="categorias">Categorías</button>
-  <button class="tab-btn" data-tab="usuario">Datos de Usuario</button>
-</div>
-
-<div class="tabs-content">
-  <div class="contenido-tab" id="tablaCategorias">
-    <table id="tabla" class="tabla-categorias table">
-      <thead>
-        <tr>
-          <th scope="col">Nombre</th>
-          <th scope="col">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        
-      </tbody>
-    </table>
-    <button id="btnNuevaCategoria" class="mt-2">Añadir Categoría</button>
+<div class="container d-flex flex-column">
+  <div class="tabs-container">
+    <button class="tab-btn active" data-tab="categorias">Categorías</button>
+    <button class="tab-btn" data-tab="usuario">Datos de Usuario</button>
   </div>
 
-  <div class="contenido-tab" id="formUsuario">
-    <form id="formDatosUsuario" class="form-box">
-      <label>Usuario</label>
-      <input type="text" id="usuario" placeholder="Usuario Actual">
+  <div class="tabs-content">
+    <div class="contenido-tab" id="tablaCategorias">
+      <table id="tabla" class="tabla-categorias table">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+      <button class="btn-form" id="btnNuevaCategoria" class="mt-2">Añadir Categoría</button>
+    </div>
 
-      <label>Contraseña</label>
-      <input type="password" id="contrasena" placeholder="Contraseña Actual">
+    <div class="contenido-tab" id="formUsuario">
+      <form id="formDatosUsuario" class="form-box">
+        <div class="mb-3">
+          <label for="usuario" class="form-label">Usuario</label>
+          <input type="text" class="form-control" id="usuario" placeholder="Usuario Actual">
+        </div>
 
-      <button type="submit" id="btnActualizarUsuario">Actualizar Datos</button>
-    </form>
+        <div class="mb-3">
+          <label for="contrasena" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="contrasena" placeholder="Contraseña Actual">
+        </div>
+
+        <button class="btn-form" type="submit" id="btnActualizarUsuario">Actualizar Datos</button>
+      </form>
+    </div>
   </div>
 </div>

@@ -1,16 +1,24 @@
+let paginaActual = 1;
+const contactosPorPagina = 5;
+
 function mostrarContactos(lista) {
   const tbody = document.querySelector('#tablaContactos tbody');
   tbody.innerHTML = '';
 
-  lista.forEach(contacto => {
+  const inicio = (paginaActual - 1) * contactosPorPagina;
+  const fin = inicio + contactosPorPagina;
+  const pagina = lista.slice(inicio, fin);
+
+  pagina.forEach(contacto => {
     const nombreCompleto = [contacto.primer_nombre, contacto.segundo_nombre, contacto.primer_apellido, contacto.segundo_apellido]
       .filter(n => n)
       .join(' ') || '-';
 
     const telefono = contacto.telefono || '-';
     const correo = contacto.correo_electronico || '-';
+
     const categorias = contacto.categorias.length > 0
-      ? contacto.categorias.map(cat => `<span class="badge bg-info text-dark me-1">${cat}</span>`).join('')
+      ? contacto.categorias.map(cat => `<span class="badge rounded-pill tag-default tag-${cat.toLowerCase()} me-1">${cat}</span>`).join('')
       : '-';
 
     const tr = document.createElement('tr');
@@ -35,6 +43,27 @@ function mostrarContactos(lista) {
 
     tbody.appendChild(tr);
   });
+
+  renderizarPaginacion(lista.length);
+}
+
+function renderizarPaginacion(totalContactos) {
+  const totalPaginas = Math.ceil(totalContactos / contactosPorPagina);
+  const ul = document.getElementById('paginacionContactos');
+  ul.innerHTML = '';
+
+  for (let i = 1; i <= totalPaginas; i++) {
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.textContent = i;
+    btn.classList.add('btn', 'btn-sm', i === paginaActual ? 'btn-primary' : 'btn-outline-primary');
+    btn.addEventListener('click', () => {
+      paginaActual = i;
+      mostrarContactos(contactos);
+    });
+    li.appendChild(btn);
+    ul.appendChild(li);
+  }
 }
 
 /*async function cargarContactos() {
@@ -151,17 +180,34 @@ document.getElementById('btnNuevoContacto').addEventListener('click', async () =
 
   // 3. HTML completo del formulario
   const formularioHTML = `
-    <input id="primer_nombre" class="swal2-input" placeholder="Primer nombre">
-    <input id="segundo_nombre" class="swal2-input" placeholder="Segundo nombre">
-    <input id="primer_apellido" class="swal2-input" placeholder="Primer apellido">
-    <input id="segundo_apellido" class="swal2-input" placeholder="Segundo apellido">
-    <input id="telefono" class="swal2-input" placeholder="Teléfono">
-    <input id="correo" class="swal2-input" placeholder="Correo electrónico">
-    <div style="text-align: left; margin-top: 1em;">
-      <strong>Categorías:</strong>
-      ${checkboxesHTML}
+  <div style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
+    
+    <!-- Nombres en una fila -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <input id="primer_nombre" class="form-control" placeholder="Primer nombre">
+      <input id="segundo_nombre" class="form-control" placeholder="Segundo nombre">
     </div>
-  `;
+
+    <!-- Apellidos en una fila -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <input id="primer_apellido" class="form-control" placeholder="Primer apellido">
+      <input id="segundo_apellido" class="form-control" placeholder="Segundo apellido">
+    </div>
+
+    <!-- Otros campos -->
+    <input id="telefono" class="form-control" placeholder="Teléfono">
+    <input id="correo" class="form-control" placeholder="Correo electrónico">
+
+    <!-- Checkboxes de categorías -->
+    <div>
+      <strong>Categorías:</strong>
+      <div class="d-flex flex-wrap gap-2 mt-2">
+        ${checkboxesHTML}
+      </div>
+    </div>
+    
+  </div>
+`;
 
   // 4. Mostrar el SweetAlert
   const result = await Swal.fire({
@@ -259,16 +305,34 @@ async function editarContacto(contacto) {
             </div>`;
   }).join('');
 
+  
   const formularioHTML = `
-    <input id="primer_nombre" class="swal2-input" value="${contacto.primer_nombre}" placeholder="Primer nombre">
-    <input id="segundo_nombre" class="swal2-input" value="${contacto.segundo_nombre}" placeholder="Segundo nombre">
-    <input id="primer_apellido" class="swal2-input" value="${contacto.primer_apellido}" placeholder="Primer apellido">
-    <input id="segundo_apellido" class="swal2-input" value="${contacto.segundo_apellido}" placeholder="Segundo apellido">
-    <input id="telefono" class="swal2-input" value="${contacto.telefono}" placeholder="Teléfono">
-    <input id="correo" class="swal2-input" value="${contacto.correo_electronico}" placeholder="Correo electrónico">
-    <div style="text-align: left; margin-top: 1em;">
-      <strong>Categorías:</strong>
-      ${checkboxesHTML}
+    <div style="display: flex; flex-direction: column; gap: 15px; text-align: left;">
+
+      <!-- Nombres en una fila -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <input id="primer_nombre" class="form-control" value="${contacto.primer_nombre}" placeholder="Primer nombre">
+        <input id="segundo_nombre" class="form-control" value="${contacto.segundo_nombre}" placeholder="Segundo nombre">
+      </div>
+
+      <!-- Apellidos en una fila -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <input id="primer_apellido" class="form-control" value="${contacto.primer_apellido}" placeholder="Primer apellido">
+        <input id="segundo_apellido" class="form-control" value="${contacto.segundo_apellido}" placeholder="Segundo apellido">
+      </div>
+
+      <!-- Otros campos -->
+      <input id="telefono" class="form-control" value="${contacto.telefono}" placeholder="Teléfono">
+      <input id="correo" class="form-control" value="${contacto.correo_electronico}" placeholder="Correo electrónico">
+
+      <!-- Checkboxes de categorías -->
+      <div>
+        <strong>Categorías:</strong>
+        <div class="d-flex flex-wrap gap-2 mt-2">
+          ${checkboxesHTML}
+        </div>
+      </div>
+      
     </div>
   `;
 

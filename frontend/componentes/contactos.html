@@ -1,35 +1,49 @@
-<h2>Lista de Contactos</h2>
+<h2 class="fw-bold mb-4">Contactos</h2>
 
-<div class="toolbar" style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; flex-wrap: wrap;">
+<div class="d-flex flex-wrap gap-3 align-items-center mb-3">
+
+  <!-- Buscador -->
+  <div class="input-group" style="max-width: 500px;">
+    <span class="input-group-text bg-white">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </span>
+    <input class="form-control" type="text" id="buscadorContactos" list="sugerenciasContactos" placeholder="Buscar por nombre o teléfono">
+    <datalist id="sugerenciasContactos">
+    </datalist>
+  </div>
+
   <!-- Botón de filtrar -->
-  <div style="position: relative;">
-    <button id="btnFiltrarCategorias">
-      <img src="https://cdn-icons-png.flaticon.com/512/61/61088.png" alt="Filtrar" width="16" style="vertical-align: middle;"/> Filtrar
+  <div class="position-relative">
+    <button id="btnFiltrarCategorias" class="btn btn-outline-dark">
+       <i class="fa-solid fa-filter me-1"></i> Filtrar
     </button>
-    <div id="filtroCategorias" style="position: absolute; top: 100%; left: 0; background: white; border: 1px solid #ccc; padding: 0.5rem; display: none; z-index: 10;">
+    <div id="filtroCategorias" class="position-absolute bg-white border p-2" style="display: none;">
     </div>
   </div>
 
-  <!-- Buscador -->
-  <input type="text" id="buscadorContactos" list="sugerenciasContactos" placeholder="Buscar por nombre o teléfono">
-  <datalist id="sugerenciasContactos">
-  </datalist>
-
   <!-- Añadir -->
-  <button id="btnNuevoContacto" class="btn btn-primary">Añadir contacto</button>
+  <button id="btnNuevoContacto" class="btn btn-primary ms-auto">
+    <i class="fa-solid fa-plus me-1"></i>
+    Añadir
+  </button>
 </div>
 
-<table id="tablaContactos" class="table table-bordered table-striped table-hover">
-  <thead class="table-dark">
-    <tr>
-      <th>Nombre</th>
-      <th>Teléfono</th>
-      <th>Correo</th>
-      <th>Categorías</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
+<div class="table-responsive">
+  <table id="tablaContactos" class="table table-hover align-middle bg-white rounded shadow-sm overflow-hidden">
+    <thead class="table-light">
+      <tr>
+        <th>Nombre</th>
+        <th>Teléfono</th>
+        <th>Correo</th>
+        <th>Categorías</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
 
+<nav class="d-flex justify-content-center">
+  <ul id="paginacionContactos"></ul>
+</nav>
