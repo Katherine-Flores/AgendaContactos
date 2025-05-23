@@ -12,24 +12,27 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-  <div class="container" style="border-radius: 32px; box-shadow: 0px 30px 60px rgba(138, 149, 158, 0.2);">
-
-    <div class="row align-items-start">
-
-      <div class="col-md-6" id="contenedor-registro">
-        <div class="container text-center contenedor" id="mensaje-registro" style="display: block;">
-          <h1>¡Hola!</h1>
-          <p>Bienvenido de nuevo.<br> Tu red de contactos, siempre a tu alcance.</p>
-          <div class="ultimo">
-            <label for="gotoRegistrarse" class="form-label col-md-12">¿Aún no tienes una cuenta?</label>
-            <button type="button" onclick="toggleregistro()">REGISTRARSE</button>
+  <div class="container w-50" style="border-radius: 32px; box-shadow: 0px 30px 60px rgba(138, 149, 158, 0.2);">
+    <div class="row align-items-stretch">
+      <div class="col-md-6 pt-4 pb-4" id="contenedor-registro">
+        <div class="container text-center h-100 pt-4 pb-4" id="mensaje-registro" style="display: block;">
+          <div class="d-flex flex-column h-100">
+            <div>
+              <h1>¡Hola!</h1>
+              <p>Bienvenido de nuevo. Tu red de contactos, siempre a tu alcance.</p>
+            </div>
+            <div class="flex-grow-1"></div>
+            <div>
+              <label class="col-md-12 text-start">¿Aún no tienes una cuenta?</label>
+              <button class="btn-toggle w-100" type="button" onclick="toggleregistro()">REGISTRARSE</button>
+            </div>
           </div>
         </div>
-        <div class="container contenedor" id="formulario-registro" style="display: none;">
+        <div class="container pt-4 pb-4" id="formulario-registro" style="display: none;">
 
           <form id="registerForm" class="row needs-validation" novalidate>
 
-            <h2>Registro</h2>
+            <h5>Registro</h5>
 
             <div class="col-md-12 mt-2">
               <label for="usuario-registro" class="form-label">Usuario</label>
@@ -55,28 +58,36 @@
               </div>
             </div>
 
-            <button type="submit">REGISTRARSE</button>
+            <div class="col-md-12 mt-3">
+              <button class="btn-form w-100" type="submit">REGISTRARSE</button>
+            </div>
 
           </form>
 
         </div>
 
       </div>
+      <div class="col-md-6 pt-4 pb-4" style="background-color: white;" id="contenedor-login">
 
-      <div class="col-md-6" style="background-color: white;" id="contenedor-login">
-
-        <div class="container text-center contenedor" id="mensaje-login" style="display: none;">
-          <h1>Crea tu cuenta</h1>
-          <p>Mantente en contacto con las<br> personas que más importan.</p>
-          <label for="gotoRegistrarse" class="form-label col-md-12">¿Ya tienes una cuenta?</label>
-          <button type="button" onclick="togglelogin()">INICIAR SESIÓN</button>
+        <div class="container text-center h-100 pt-4 pb-4" id="mensaje-login" style="display: none;">
+          <div class="d-flex flex-column h-100">
+            <div>
+              <h2>Crea tu cuenta</h2>
+              <p>Mantente en contacto con las personas que más importan.</p>
+            </div>
+            <div class="flex-grow-1"></div>
+            <div>
+              <label class="col-md-12 text-start">¿Ya tienes una cuenta?</label>
+              <button class="btn-toggle w-100" type="button" onclick="togglelogin()">INICIAR SESIÓN</button>
+            </div>
+          </div>
         </div>
 
-        <div class="container contenedor" id="formulario-login" style="display: block;">
+        <div class="container pt-4 pb-4" id="formulario-login" style="display: block;">
 
           <form id="loginForm" class="row needs-validation" novalidate>
 
-            <h2>Login</h2>
+            <h5>INICIO DE SESIÓN</h5>
 
             <div class="col-md-12 mt-2">
               <label for="validationCustom01" class="form-label">Usuario</label>
@@ -93,16 +104,16 @@
                 Porfavor, ingrese su contraseña.
               </div>
             </div>
-
-            <button class="align-items-end" type="submit">Iniciar Sesión</button>
+            
+            <div class="col-md-12 mt-3">
+              <button class="btn-form w-100" type="submit">INICIAR SESIÓN</button>
+            </div>
 
           </form>
         </div>
 
       </div>
-
     </div>
-
   </div>
 
   <div id="resultado"></div>
