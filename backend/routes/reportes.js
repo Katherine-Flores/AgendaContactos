@@ -11,23 +11,33 @@ router.post('/reportes/enviar', verificarToken, async (req, res) => {
 
   db.all('SELECT * FROM contactos WHERE usuario_id = ? ORDER BY primer_nombre', [usuarioId], async (err, rows) => {
     if (err) return res.status(500).json({ message: 'Error al obtener contactos' });
+    const fecha = new Date().toLocaleDateString('es-ES');
+    const total = rows.length;
 
     const html = `
-      <h2 style="text-align:center;">Reporte de Contactos</h2>
-      <table style="width:100%; border-collapse: collapse;" border="1">
-        <tr style="background-color:#f2f2f2;">
-          <th>Nombre</th>
-          <th>Correo</th>
-          <th>Teléfono</th>
-        </tr>
-        ${rows.map(c => `
-          <tr>
-            <td>${c.primer_nombre} ${c.primer_apellido}</td>
-            <td>${c.correo_electronico || '-'}</td>
-            <td>${c.telefono || '-'}</td>
-          </tr>
-        `).join('')}
-      </table>
+      <div style="font-family: Arial, sans-serif; color: #333;">
+        <h2 style="text-align: center;">Reporte de Contactos</h2>
+        <p style="text-align: center;">Fecha del reporte: <strong>${fecha}</strong><br>Total de contactos: <strong>${total}</strong></p>
+
+        <table style="width: 100%; border-collapse: separate; border-spacing: 0 12px;">
+          <thead>
+            <tr style="background-color:#426CC2; color:white;">
+              <th style="padding: 12px; text-align: left; border-radius: 8px 0 0 0;">Nombre</th>
+              <th style="padding: 12px; text-align: left;">Correo</th>
+              <th style="padding: 12px; text-align: left; border-radius: 0 8px 0 0;">Teléfono</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.map((c, i) => `
+              <tr style="background-color: #ffffff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-radius: 12px; overflow: hidden;">
+                <td style="padding: 12px; border-top-left-radius: 12px; border-bottom-left-radius: 12px;">${c.primer_nombre} ${c.primer_apellido}</td>
+                <td style="padding: 12px;">${c.correo_electronico || '-'}</td>
+                <td style="padding: 12px; border-top-right-radius: 12px; border-bottom-right-radius: 12px;">${c.telefono || '-'}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
     `;
 
     // Enviar correo
