@@ -199,4 +199,21 @@ router.post('/contactos/filtro', verificarToken, (req, res) => {
   });
 });
 
+router.get('/contactos/con-correo', verificarToken, (req, res) => {
+  const usuarioId = req.usuario.id;
+  console.log(usuarioId);
+  const sql = `
+    SELECT id, primer_nombre, correo_electronico 
+    FROM contactos 
+    WHERE usuario_id = ? 
+      AND correo_electronico IS NOT NULL 
+      AND correo_electronico != ''
+  `;
+
+  db.all(sql, [usuarioId], (err, rows) => {
+    if (err) return res.status(500).json({ message: 'Error al obtener contactos' });
+    res.json(rows);
+  });
+});
+
 module.exports = router;

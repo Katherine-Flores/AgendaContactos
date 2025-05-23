@@ -26,6 +26,9 @@ app.use('/api/categorias', categoriasRoutes);
 const usuariosRoutes = require('./routes/usuarioActual');
 app.use('/api', usuariosRoutes);
 
+const reunionesRoutes = require('./routes/reuniones');
+app.use('/api', reunionesRoutes);
+
 // Puerto
 const PORT = 3000;
 app.listen(PORT, () => {
