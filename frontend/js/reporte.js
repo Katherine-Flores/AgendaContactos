@@ -17,11 +17,19 @@ function inicializarReporte() {
       })
         .then(res => res.json())
         .then(res => {
-          document.getElementById('estadoReporte').textContent = res.message;
+          const estadoDiv = document.getElementById('estadoReporte');
+          estadoDiv.className = ''; 
+
+          estadoDiv.classList.add('alert', 'alert-success');
+          estadoDiv.textContent = res.message;
         })
         .catch(err => {
           console.error('Error al enviar reporte:', err);
-          document.getElementById('estadoReporte').textContent = 'Error al enviar reporte';
+          const estadoDiv = document.getElementById('estadoReporte');
+          estadoDiv.className = ''; 
+
+          estadoDiv.classList.add('alert', 'alert-danger');
+          estadoDiv.textContent = 'Error al enviar reporte';
         });
     });
   }
