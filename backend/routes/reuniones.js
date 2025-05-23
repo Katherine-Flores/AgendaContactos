@@ -21,7 +21,7 @@ router.post('/reuniones/enviar', verificarToken, async (req, res) => {
   try {
     for (let correo of contactos) {
       await transporter.sendMail({
-        from: '"Agenda de Contactos" <kfloresf1@miumg.edu.gt>',
+        from: '"Agenda KF" <kfloresf1@miumg.edu.gt>',
         to: correo,
         subject: asunto,
         html: mensaje
@@ -29,11 +29,9 @@ router.post('/reuniones/enviar', verificarToken, async (req, res) => {
     }
 
     res.json({ message: 'Correos enviados correctamente' });
-    console.log('Correos enviados correctamente');
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error al enviar correos' });
-    console.log('Error al enviar correos');
   }
 });
 

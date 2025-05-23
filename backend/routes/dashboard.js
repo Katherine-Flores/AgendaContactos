@@ -201,7 +201,6 @@ router.post('/contactos/filtro', verificarToken, (req, res) => {
 
 router.get('/contactos/con-correo', verificarToken, (req, res) => {
   const usuarioId = req.usuario.id;
-  console.log(usuarioId);
   const sql = `
     SELECT id, primer_nombre, correo_electronico 
     FROM contactos 

@@ -1,14 +1,23 @@
-<h5>Crear reunión</h5>
-<form id="formReunion">
-  <label>Asunto:</label>
-  <input type="text" name="asunto" required><br><br>
+<div class="contenido-info p-5">
+    <h5>Crear reunión</h5>
+    <form id="formReunion">
+         <div class="mb-3">
+            <label class="form-label">Asunto</label>
+            <input class="form-control" type="text" name="asunto" required>
+         </div>
 
-  <label>Mensaje:</label><br>
-  <textarea name="mensaje" rows="6" cols="50" required></textarea><br><br>
+        <div class="mb-3">
+            <label class="form-label">Mensaje</label>
+            <textarea class="form-control" name="mensaje" rows="6" cols="50" required></textarea>
+        </div>
 
-  <label>Selecciona contactos:</label>
-  <div id="listaContactos">
-  </div><br>
+        <div class="mb-3">
+            <label class="form-label">Selecciona contactos</label>
+            <div class="form-check" id="listaContactos">
 
-  <button type="submit">Enviar correos</button>
-</form>
+            </div>
+        </div>
+
+        <button class="btn-form" type="submit">Enviar correos</button>
+    </form>
+</div>
