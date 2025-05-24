@@ -12,7 +12,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-  <div class="container w-50" style="border-radius: 32px; box-shadow: 0px 30px 60px rgba(138, 149, 158, 0.2);">
+  <div class="container shadow-lg p-0" id="contenedor-principal">
     <div class="row align-items-stretch">
       <div class="col-md-6 pt-4 pb-4" id="contenedor-registro">
         <div class="container text-center h-100 pt-4 pb-4" id="mensaje-registro" style="display: block;">
@@ -62,6 +62,9 @@
               <button class="btn-form w-100" type="submit">REGISTRARSE</button>
             </div>
 
+            <div>
+              <button class="link-button mt-3" type="button" onclick="togglelogin()">¿Ya tienes una cuenta?</button>
+            </div>
           </form>
 
         </div>
@@ -107,6 +110,10 @@
             
             <div class="col-md-12 mt-3">
               <button class="btn-form w-100" type="submit">INICIAR SESIÓN</button>
+            </div>
+
+            <div>
+              <button class="link-button mt-3" type="button" onclick="toggleregistro()">¿Aún no tienes una cuenta?</button>
             </div>
 
           </form>
@@ -217,33 +224,49 @@
 <!-- Script de style -->
 <script>
   const rootStyles = getComputedStyle(document.documentElement);
-  
-  // Extraer las variables
   const azulOscuro = rootStyles.getPropertyValue('--azul-oscuro').trim();
   const azulMedio = rootStyles.getPropertyValue('--azul-medio').trim();
   const azulClaro = rootStyles.getPropertyValue('--azul-claro').trim();
   const fondoClaro = rootStyles.getPropertyValue('--fondo-claro').trim();
 
-  function toggleregistro(){
+  function esPantallaPequena() {
+    return window.innerWidth <= 900;
+  }
+
+  function toggleregistro() {
     const mensaje = document.getElementById("mensaje-registro");
     const formulario = document.getElementById("formulario-registro");
     const contenedor = document.getElementById("contenedor-registro");
     const mensaje2 = document.getElementById("mensaje-login");
     const formulario2 = document.getElementById("formulario-login");
     const contenedor2 = document.getElementById("contenedor-login");
-  
-    mensaje.style.display = 'none';
-    formulario.style.display = 'block';
-    contenedor.style.backgroundColor = 'white';
-    contenedor.style.color = azulOscuro;
 
-    mensaje2.style.display = 'block';
-    formulario2.style.display = 'none';
-    contenedor2.style.backgroundColor = azulMedio;
-    contenedor2.style.color = 'white';
+    if (esPantallaPequena()) {
+      // En móviles/tablets solo se muestra el formulario de registro
+      mensaje.style.display = 'none';
+      formulario.style.display = 'block';
+      contenedor.style.display = 'block';
+
+      mensaje2.style.display = 'none';
+      formulario2.style.display = 'none';
+      contenedor2.style.display = 'none';
+    } else {
+      // En pantallas grandes, se muestran ambos lados
+      mensaje.style.display = 'none';
+      formulario.style.display = 'block';
+      contenedor.style.display = 'block';
+      contenedor.style.backgroundColor = 'white';
+      contenedor.style.color = azulOscuro;
+
+      mensaje2.style.display = 'block';
+      formulario2.style.display = 'none';
+      contenedor2.style.display = 'block';
+      contenedor2.style.backgroundColor = azulMedio;
+      contenedor2.style.color = 'white';
+    }
   }
 
-  function togglelogin(){
+  function togglelogin() {
     const mensaje = document.getElementById("mensaje-login");
     const formulario = document.getElementById("formulario-login");
     const contenedor = document.getElementById("contenedor-login");
@@ -251,16 +274,63 @@
     const formulario2 = document.getElementById("formulario-registro");
     const contenedor2 = document.getElementById("contenedor-registro");
 
-    mensaje.style.display = 'none';
-    formulario.style.display = 'block';
-    contenedor.style.backgroundColor = 'white';
-    contenedor.style.color = azulOscuro;
+    if (esPantallaPequena()) {
+      // En móviles/tablets solo se muestra el formulario de login
+      mensaje.style.display = 'none';
+      formulario.style.display = 'block';
+      contenedor.style.display = 'block';
 
-    mensaje2.style.display = 'block';
-    formulario2.style.display = 'none';
-    contenedor2.style.backgroundColor = azulMedio;
-    contenedor2.style.color = 'white';
+      mensaje2.style.display = 'none';
+      formulario2.style.display = 'none';
+      contenedor2.style.display = 'none';
+    } else {
+      // En pantallas grandes, se muestran ambos lados
+      mensaje.style.display = 'none';
+      formulario.style.display = 'block';
+      contenedor.style.display = 'block';
+      contenedor.style.backgroundColor = 'white';
+      contenedor.style.color = azulOscuro;
+
+      mensaje2.style.display = 'block';
+      formulario2.style.display = 'none';
+      contenedor2.style.display = 'block';
+      contenedor2.style.backgroundColor = azulMedio;
+      contenedor2.style.color = 'white';
+    }
   }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const mensaje = document.getElementById("mensaje-login");
+    const formulario = document.getElementById("formulario-login");
+    const contenedor = document.getElementById("contenedor-login");
+    const mensaje2 = document.getElementById("mensaje-registro");
+    const formulario2 = document.getElementById("formulario-registro");
+    const contenedor2 = document.getElementById("contenedor-registro");
+
+    if (esPantallaPequena()) {
+      // En móviles solo mostrar login
+      mensaje.style.display = 'none';
+      formulario.style.display = 'block';
+      contenedor.style.display = 'block';
+
+      mensaje2.style.display = 'none';
+      formulario2.style.display = 'none';
+      contenedor2.style.display = 'none';
+    } else {
+      // En pantallas grandes, mostrar login con mensaje y registro con mensaje
+      mensaje.style.display = 'none';
+      formulario.style.display = 'block';
+      contenedor.style.display = 'block';
+      contenedor.style.backgroundColor = 'white';
+      contenedor.style.color = azulOscuro;
+
+      mensaje2.style.display = 'block';
+      formulario2.style.display = 'none';
+      contenedor2.style.display = 'block';
+      contenedor2.style.backgroundColor = azulMedio;
+      contenedor2.style.color = 'white';
+    }
+  });
 </script>
 </body>
 </html>

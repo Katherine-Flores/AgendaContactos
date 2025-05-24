@@ -15,6 +15,15 @@ body {
   background-color: var(--fondo-claro) !important; 
 }
 
+#contenedor-principal {
+  max-width: 50vw;
+  border-radius: 32px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
 #contenedor-login {
   border-radius: 0 32px 32px 0;
 }
@@ -41,4 +50,45 @@ body {
   border-radius: 8px;
   border: solid 2px white;
   padding: 10px;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: var(--azul-oscuro);
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  display: none;
+}
+
+
+@media (max-width: 800px) {
+  body {
+    font-size: 16px;
+  }
+
+  #contenedor-principal {
+    max-width: 371px;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  #contenedor-registro, 
+  #contenedor-login {
+    border-radius: 32px;
+    width: 100%;
+    background-color: white;
+    color: var(--azul-oscuro);
+  }
+
+  .link-button {
+    display: block;
+  }
+
+  #mensaje-login,
+  #mensaje-registro {
+    display: none !important;
+  }
 }
