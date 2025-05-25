@@ -79,8 +79,8 @@ body {
   #contenedor-login {
     border-radius: 32px;
     width: 100%;
-    background-color: white;
-    color: var(--azul-oscuro);
+    background-color: white !important;
+    color: black !important;
   }
 
   .link-button {
