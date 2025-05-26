@@ -25,11 +25,12 @@ db.serialize(() => {
       primer_apellido TEXT NOT NULL,
       segundo_apellido TEXT,
       telefono TEXT NOT NULL,
-      correo_electronico TEXT NOT NULL UNIQUE,
+      correo_electronico TEXT NOT NULL,
       foto_perfil BLOB,
       fecha_nacimiento DATE,
       usuario_id INTEGER,
-      FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
+      FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL,
+      UNIQUE(correo_electronico, usuario_id)
     );
 
     CREATE TABLE IF NOT EXISTS direcciones (
