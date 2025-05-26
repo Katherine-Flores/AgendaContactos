@@ -16,7 +16,30 @@ exports.register = (req, res) => {
 
   db.run(sql, [nombre_usuario, hash], function(err) {
     if (err) return res.status(500).json({ error: err.message });
-    res.json({ message: 'Usuario registrado correctamente', id: this.lastID });
+
+    const nuevoUsuarioId = this.lastID;
+
+    // Categorías por defecto
+    const categorias = ['Trabajo', 'Amigos', 'Familia'];
+    const placeholders = categorias.map(() => '(?, ?)').join(', ');
+    const values = categorias.flatMap(nombre => [nombre, nuevoUsuarioId]);
+
+    const sqlCategorias = `INSERT INTO categorias (nombre, usuario_id) VALUES ${placeholders}`;
+
+    db.run(sqlCategorias, values, function (err2) {
+      if (err2) {
+        return res.status(500).json({
+          error: 'Usuario creado, pero ocurrió un error al crear las categorías por defecto',
+          usuario_id: nuevoUsuarioId,
+        });
+      }
+
+      res.json({
+        message: 'Usuario registrado correctamente con categorías por defecto',
+        usuario_id: nuevoUsuarioId,
+        categorias_creadas: categorias,
+      });
+    });
   });
 };
 

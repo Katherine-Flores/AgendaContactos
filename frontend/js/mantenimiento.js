@@ -25,36 +25,57 @@
   document.querySelector('[data-tab="categorias"]').click();
 
 async function cargarCategorias() {
-  const res = await fetch('http://localhost:3000/api/categorias');
-  const categorias = await res.json();
+  const token = localStorage.getItem('token');
+  if (!token) return;
 
-  const tbody = document.querySelector('#tabla tbody');
-  tbody.innerHTML = ''; // limpiar
-
-  categorias.forEach(cat => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${cat.nombre}</td>
-      <td>
-        <i class="fa-solid fa-pen-to-square editar btn btn-warning" style="cursor:pointer;"></i>
-        <i class="fa-solid fa-trash eliminar btn btn-danger" style="cursor:pointer;"></i>
-      </td>
-    `;
-
-    // Asignar eventos
-    tr.querySelector('.editar').addEventListener('click', () => {
-      editarCategoria(cat.id, cat.nombre);
+  try {
+    const res = await fetch('http://localhost:3000/api/categorias', {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
     });
 
-    tr.querySelector('.eliminar').addEventListener('click', () => {
-      eliminarCategoria(cat.id);
+    const categorias = await res.json();
+
+    if (!res.ok) {
+      console.error(categorias);
+      Swal.fire('Error', 'No se pudieron cargar las categorías', 'error');
+      return;
+    }
+
+    const tbody = document.querySelector('#tabla tbody');
+    tbody.innerHTML = ''; // limpiar
+
+    categorias.forEach(cat => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${cat.nombre}</td>
+        <td>
+          <i class="fa-solid fa-pen-to-square editar btn btn-warning" style="cursor:pointer;"></i>
+          <i class="fa-solid fa-trash eliminar btn btn-danger" style="cursor:pointer;"></i>
+        </td>
+      `;
+
+      tr.querySelector('.editar').addEventListener('click', () => {
+        editarCategoria(cat.id, cat.nombre);
+      });
+
+      tr.querySelector('.eliminar').addEventListener('click', () => {
+        eliminarCategoria(cat.id);
+      });
+
+      tbody.appendChild(tr);
     });
 
-    tbody.appendChild(tr);
-  });
+  } catch (err) {
+    console.error('Error de red o JSON:', err);
+    Swal.fire('Error', 'Ocurrió un error al cargar las categorías', 'error');
+  }
 }
 
 async function eliminarCategoria(id) {
+  const token = localStorage.getItem('token');
+
   Swal.fire({
     title: '¿Eliminar categoría?',
     text: 'Esta acción no se puede deshacer',
@@ -65,16 +86,23 @@ async function eliminarCategoria(id) {
   }).then(result => {
     if (result.isConfirmed) {
       fetch(`http://localhost:3000/api/categorias/${id}`, {
-        method: 'DELETE'
-      }).then(() => {
+        method: 'DELETE',
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }).then(res => {
+        if (!res.ok) throw new Error('Error al eliminar');
         Swal.fire('Eliminada', 'La categoría fue eliminada', 'success');
         cargarCategorias();
-      });
+      })
+      .catch(() => Swal.fire('Error', 'No se pudo eliminar la categoría', 'error'));
     }
   });
 }
 
 function editarCategoria(id, nombreActual) {
+  const token = localStorage.getItem('token');
+
   Swal.fire({
   title: 'Editar categoría',
   input: 'text',
@@ -86,17 +114,25 @@ function editarCategoria(id, nombreActual) {
   if (result.isConfirmed && result.value.trim() !== '') {
     fetch(`http://localhost:3000/api/categorias/${id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      },
       body: JSON.stringify({ nombre: result.value.trim() })
-    }).then(() => {
+    })
+    .then(res => {
+      if (!res.ok) throw new Error('Error al editar');
       Swal.fire('Actualizado', 'La categoría fue modificada', 'success');
       cargarCategorias();
-    });
+    })
+    .catch(() => Swal.fire('Error', 'No se pudo editar la categoría', 'error'));
   }
 });
 }
 
 document.getElementById('btnNuevaCategoria').addEventListener('click', () => {
+  const token = localStorage.getItem('token');
+
   Swal.fire({
     title: 'Nueva categoría',
     input: 'text',
@@ -114,7 +150,10 @@ document.getElementById('btnNuevaCategoria').addEventListener('click', () => {
     if (result.isConfirmed) {
       fetch('http://localhost:3000/api/categorias', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token 
+        },
         body: JSON.stringify({ nombre: result.value.trim() })
       })
       .then(res => {
