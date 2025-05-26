@@ -63,6 +63,53 @@ body {
   display: none;
 }
 
+.password-wrapper {
+  position: relative;
+}
+
+.tooltip-password {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  padding: 10px;
+  font-size: 0.85rem;
+  border-radius: 5px;
+  width: 250px;
+  z-index: 100;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.password-wrapper input:hover + .toggle-button + .tooltip-password {
+  display: block;
+}
+
+.toggle-button {
+  display: inline-flex;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: unset;
+  right: 12px;
+  cursor: pointer;
+}
+
+.eye-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.form-control.is-valid, .form-control:valid,
+.form-control.is-invalid, .form-control:invalid {
+  background-image: none !important;
+}
+
+.password-wrapper:has(.form-control.is-invalid) .toggle-button,
+.was-validated .password-wrapper:has(.form-control:invalid) .toggle-button {
+  top: 30%;
+}
 
 @media (max-width: 800px) {
   body {
