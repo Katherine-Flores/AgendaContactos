@@ -5,9 +5,10 @@ db.serialize(() => {
   db.exec(`
     CREATE TABLE IF NOT EXISTS categorias (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      nombre TEXT NOT NULL UNIQUE,
+      nombre TEXT NOT NULL,
       usuario_id INTEGER,
-      FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL
+      FOREIGN KEY(usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL,
+      UNIQUE(nombre, usuario_id)
     );
 
     CREATE TABLE IF NOT EXISTS usuarios (
