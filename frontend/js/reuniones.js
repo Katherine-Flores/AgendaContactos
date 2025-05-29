@@ -62,6 +62,58 @@ function inicializarReuniones() {
         });
     });
   }
+
+  const btnPlantilla = document.getElementById('btnPlantilla');
+  if (btnPlantilla) {
+    btnPlantilla.addEventListener('click', () => {
+      const asuntoInput = document.querySelector('input[name="asunto"]');
+      const mensajeTextarea = document.querySelector('textarea[name="mensaje"]');
+
+      if (asuntoInput && mensajeTextarea) {
+        asuntoInput.value = 'FESTEC';
+
+        const mensajeHTML = `
+  <!DOCTYPE html>
+  <html>
+    <body style="font-family: Arial, sans-serif; background-color: #f3f6fa; margin: 0; padding: 0;">
+      <div style="max-width: 600px; margin: auto; background-color: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        
+        <div style="background-color: #004080; color: white; padding: 20px; text-align: center; border-radius: 12px 12px 0 0;">
+          <h1 style="margin: 0; font-size: 26px;">🎉 FESTEC 2025 🎉</h1>
+          <p style="margin: 5px 0;">Universidad Mariano Gálvez de Guatemala</p>
+        </div>
+        
+        <div style="padding: 20px; text-align: center;">
+          <h2 style="color: #004080; margin-top: 0;">¡Vive la tecnología con nosotros!</h2>
+          
+          <p style="margin: 10px 0;">
+            <strong>La carrera de Ingeniería en Sistemas</strong> de la sede <strong>Puerto Barrios</strong> te invita a participar en el gran evento anual <strong>FESTEC 2025</strong>.
+          </p>
+                    
+          <p style="margin: 10px 0;">
+            Prepárate para un día lleno de proyectos, innovación, tecnología, concursos, torneos y mucho más.
+          </p>
+          
+          <p style="margin: 10px 0;">
+            <strong>📅 Fecha:</strong> 31-05-2025<br>
+            <strong>📍 Lugar:</strong> Comando Naval del Caribe
+          </p>
+
+        </div>
+        
+        <div style="margin-top: 30px; font-size: 12px; color: #666; text-align: center;">
+          © 2025 Universidad Mariano Gálvez de Guatemala - Ingeniería en Sistemas
+        </div>
+        
+      </div>
+    </body>
+  </html>
+        `;
+
+        mensajeTextarea.value = mensajeHTML.trim();
+      }
+    });
+  }
 }
 
 inicializarReuniones();
